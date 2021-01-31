@@ -49,7 +49,8 @@ function idToX(id: number) {
 type Props = {
   octaves: number,
   currentNote: number,
-  // onNotePress: (id) => void,
+  play: (id: number) => void,
+  stop: () => void
 }
 
 type Key = {
@@ -57,7 +58,7 @@ type Key = {
   x: string,
 }
 
-export default function Piano({ octaves = 2, currentNote }: Props) {
+export default function Piano({ octaves = 2, currentNote, play, stop }: Props) {
   const numNotes = octaves * 12
   const whiteKeys = []
   const blackKeys = []
@@ -78,10 +79,10 @@ export default function Piano({ octaves = 2, currentNote }: Props) {
   return (
     <svg className={styles.piano} width={whiteKeys.length * WHITE_WIDTH}>
       <g className={styles.white}>
-        {whiteKeys.map(k => <rect tabIndex={k.id} key={k.id} className={cx(styles.white, { [styles.pressed]: currentNote === k.id })} x={k.x} width={WHITE_WIDTH} height={WHITE_HEIGHT} />)}
+        {whiteKeys.map(k => <rect onMouseDown={() => play(k.id)} onMouseUp={stop} tabIndex={k.id} key={k.id} className={cx(styles.white, { [styles.pressed]: currentNote === k.id })} x={k.x} width={WHITE_WIDTH} height={WHITE_HEIGHT} />)}
       </g>
       <g className={styles.black}>
-        {blackKeys.map(k => <rect tabIndex={k.id} key={k.id} className={cx(styles.black, { [styles.pressed]: currentNote === k.id })} x={k.x} width={BLACK_WIDTH} height={BLACK_HEIGHT} />)}
+        {blackKeys.map(k => <rect tabIndex={k.id} onMouseDown={() => play(k.id)} onMouseUp={stop} key={k.id} className={cx(styles.black, { [styles.pressed]: currentNote === k.id })} x={k.x} width={BLACK_WIDTH} height={BLACK_HEIGHT} />)}
       </g>
     </svg>
   )

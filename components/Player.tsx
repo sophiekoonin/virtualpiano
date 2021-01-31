@@ -17,40 +17,64 @@ function generatePianoNotes(numOctaves: number, startingOctave: number) {
 }
 
 export default function Player({ notes }: Props) {
-  const [osc, setOsc] = useState<OscillatorNode>()
   const [currentNote, setCurrentNote] = useState(-1)
-  const [pianoNotes] = useState(generatePianoNotes(2, 4))
   const [noteTimeouts, setNoteTimeouts] = useState([])
-  function playScale() {
-    const audioCtx = new window.AudioContext()
-    const wave = audioCtx.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
-    const osc = audioCtx.createOscillator();
-    setOsc(osc)
-    osc.setPeriodicWave(wave);
+  const [audioCtx, setAudioCtx] = useState<AudioContext>()
+  const [oscillator, setOscillator] = useState<OscillatorNode>()
+  const pianoNotes = generatePianoNotes(2, 4)
 
-    osc.connect(audioCtx.destination);
-    osc.start();
+
+  function setupAudioCtx() {
+    const ac = new window.AudioContext()
+    const wave = ac.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
+    const oscillator = ac.createOscillator();
+    oscillator.setPeriodicWave(wave);
+    setAudioCtx(ac)
+    setOscillator(oscillator)
+    oscillator.start();
+
+  }
+
+
+  async function playNote(id: number) {
+    if (audioCtx == null || oscillator == null) {
+      return
+    }
+    oscillator.connect(audioCtx.destination)
+    setCurrentNote(id)
+    oscillator.frequency.setValueAtTime((pianoNotes[id].frequency), audioCtx.currentTime)
+  }
+
+
+
+  function playScale() {
+    if (audioCtx == null || oscillator == null) {
+      return
+    }
+    oscillator.connect(audioCtx.destination)
+
     for (let i = 0; i < notes.length; i++) {
       const time = audioCtx.currentTime + (i * 0.5)
       noteTimeouts.push(setTimeout(() => {
         setCurrentNote(pianoNotes.findIndex(n => n.frequency === notes[i].frequency))
         setNoteTimeouts(noteTimeouts.slice(1))
       }, time * 1000))
-      osc.frequency.setValueAtTime(notes[i].frequency, time)
+      oscillator.frequency.setValueAtTime(notes[i].frequency, time)
     }
-    osc.stop(audioCtx.currentTime + 4)
+    oscillator.stop(audioCtx.currentTime + 4)
   }
 
   function stop() {
-    osc.stop()
+    oscillator.disconnect(audioCtx.destination)
     noteTimeouts.forEach(t => clearTimeout(t))
     setCurrentNote(-1)
   }
   return (
     <>
+      {audioCtx != null && oscillator != null ? <span>Ready</span> : <button onClick={() => setupAudioCtx()} type="button">Power on</button>}
       <button onClick={() => playScale()} type="button">Play scale</button>
       <button onClick={() => stop()} type="button">Stop</button>
-      <Piano octaves={2} currentNote={currentNote} />
+      <Piano octaves={2} currentNote={currentNote} play={playNote} stop={stop} />
     </>
   )
 }
