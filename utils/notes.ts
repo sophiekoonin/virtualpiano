@@ -10,9 +10,6 @@ const SharpToFlat = Object.freeze({
   "G#": "Ab"
 })
 const SemitoneIntervals = Object.freeze({
-  A: 0,
-  "A#": 1,
-  B: 2,
   C: -9,
   "C#": -8,
   D: -7,
@@ -21,7 +18,10 @@ const SemitoneIntervals = Object.freeze({
   F: -4,
   "F#": -3,
   G: -2,
-  "G#": -1
+  "G#": -1,
+  A: 0,
+  "A#": 1,
+  B: 2
 })
 
 export const notes = Object.keys(SemitoneIntervals)
