@@ -2,13 +2,14 @@ import { A4 } from "./constants"
 
 const FREQUENCY_RATIO = 1.059463
 
-const SharpToFlat = Object.freeze({
+export const SharpToFlat = Object.freeze({
   "A#": "Bb",
   "C#": "Db",
   "D#": "Eb",
   "F#": "Gb",
   "G#": "Ab"
 })
+
 const SemitoneIntervals = Object.freeze({
   C: -9,
   "C#": -8,

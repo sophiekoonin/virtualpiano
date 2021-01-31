@@ -3,18 +3,30 @@ import { useState } from 'react'
 import Player from '../components/Player';
 
 import styles from '../styles/Home.module.css';
-import { calcScale } from '../utils/scales';
+import { notes, SharpToFlat } from '../utils/notes';
+import { calcScale, Scales } from '../utils/scales';
 
 export default function Home() {
   const [key, setKey] = useState('C')
+  const [scale, setScale] = useState(Scales.MAJOR)
   return (
     <div className={styles.container}>
       <Head>
-        <title>musicologic</title>
+        <title>Scaletron 3000</title>
       </Head>
 
       <main className={styles.main}>
-        <Player freqs={calcScale('G', 'Major').map(n => n.frequency)} />
+        <select value={scale} onChange={e => setScale(e.target.value)}>
+          {Object.keys(Scales).map(s => (
+            <option key={s} value={Scales[s]}>{Scales[s]}</option>
+          ))}
+        </select>
+        <select value={key} onChange={e => setKey(e.target.value)}>
+          {notes.map(n => (
+            <option key={n} value={n}>{n.includes('#') ? `${n}/${SharpToFlat[n]}` : n}</option>
+          ))}
+        </select>
+        <Player freqs={calcScale(key, scale).map(n => n.frequency)} />
       </main>
 
       <footer className={styles.footer}>

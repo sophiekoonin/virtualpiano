@@ -1,4 +1,4 @@
-import { calcInterval, generateOctave, Note } from "./notes"
+import { generateOctave, Note } from "./notes"
 
 export const Scales = Object.freeze({
   MAJOR: "Major",

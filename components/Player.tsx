@@ -2,14 +2,13 @@ type Props = {
   freqs: Array<number>
 }
 
-import { useState, useEffect } from 'react'
 
-import { piano } from '../utils/wavetable'
+import { real, imag } from '../utils/wavetable'
 export default function Player({ freqs }: Props) {
-  console.log(freqs)
   function playScale() {
+    debugger
     const audioCtx = new window.AudioContext()
-    const wave = audioCtx.createPeriodicWave(piano.real, piano.imag);
+    const wave = audioCtx.createPeriodicWave(real, imag);
     const osc = audioCtx.createOscillator();
     osc.setPeriodicWave(wave);
 
