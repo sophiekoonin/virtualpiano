@@ -2,9 +2,11 @@ import Head from 'next/head';
 import { useState } from 'react'
 
 import styles from '../styles/Home.module.css';
+import { calcScale } from '../utils/scales';
 
 export default function Home() {
   const [key, setKey] = useState('C')
+  console.log(calcScale('G', 'Major'))
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>musicologic</h1>
-        <p>What ?</p>
+        <p>What?</p>
       </main>
 
       <footer className={styles.footer}>
