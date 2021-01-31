@@ -28,10 +28,7 @@ export const ScalePatterns = Object.freeze({
   [Scales.PENT_BLUES]: [0, 3, 2, 2, 3, 2]
 })
 
-export type Scale = {
-  notes: Array<Note>
-}
-export function calcScale(rootNote: string, type: string): Scale {
+export function calcScale(rootNote: string, type: string): Array<Note> {
   // start on octave 4, we may want to change this later
   const octave = generateOctave(rootNote, 4)
   const scalePattern = ScalePatterns[type]
@@ -44,7 +41,5 @@ export function calcScale(rootNote: string, type: string): Scale {
     notes.push(octave[currentPosition])
   }
 
-  return {
-    notes
-  }
+  return notes
 }

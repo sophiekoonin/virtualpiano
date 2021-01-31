@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { useState } from 'react'
+import Player from '../components/Player';
 
 import styles from '../styles/Home.module.css';
 import { calcScale } from '../utils/scales';
 
 export default function Home() {
   const [key, setKey] = useState('C')
-  console.log(calcScale('G', 'Major'))
   return (
     <div className={styles.container}>
       <Head>
@@ -14,8 +14,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>musicologic</h1>
-        <p>What?</p>
+        <Player freqs={calcScale('G', 'Major').map(n => n.frequency)} />
       </main>
 
       <footer className={styles.footer}>
