@@ -1,0 +1,17 @@
+.piano {
+  margin: 2rem 0;
+  .white {
+    fill: #fff;
+    stroke: black;
+    stroke-width: 1px;
+  }
+
+  .black {
+    fill: rgb(22, 22, 22);
+    stroke: black;
+  }
+
+  .pressed {
+    fill: rgb(148, 148, 148);
+  }
+}
