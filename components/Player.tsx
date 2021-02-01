@@ -1,13 +1,13 @@
 
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { generateOctave, Note } from '../utils/notes';
 import { real, imag } from '../utils/wavetable'
-import { AudioContext } from './AudioContext';
 import Piano from './Piano';
 
 
 type Props = {
   notes: Array<Note>
+  ready: boolean
 }
 
 function generatePianoNotes(numOctaves: number, startingOctave: number) {
@@ -17,54 +17,80 @@ function generatePianoNotes(numOctaves: number, startingOctave: number) {
   }, [])
 }
 
-export default function Player({ notes }: Props) {
+export default function Player({ notes, ready }: Props) {
   const [currentNote, setCurrentNote] = useState(-1)
   const [noteTimeouts, setNoteTimeouts] = useState([])
-  const [oscillator, setOscillator] = useState<OscillatorNode>()
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioContextRef = useRef<AudioContext>()
+  const oscRef = useRef<OscillatorNode>()
   const pianoNotes = generatePianoNotes(2, 4)
+  async function initOscillator(): Promise<OscillatorNode> {
+    return new Promise((resolve) => {
+      let audioCtx;
+      if (audioContextRef.current == null) {
+        audioCtx = new window.AudioContext()
+        audioContextRef.current = audioCtx
+      } else {
+        audioCtx = audioContextRef.current
+      }
+      const wave = audioCtx.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
+      const osc = audioCtx.createOscillator();
+      osc.setPeriodicWave(wave);
+      osc.connect(audioCtx.destination)
+      osc.start();
+      setIsPlaying(true)
+      oscRef.current = osc
 
-  const { audioCtx } = useContext(AudioContext)
+      resolve(osc)
+    })
+
+  }
 
   useEffect(() => {
-    if (audioCtx == null) {
-      return
-    }
-    const wave = audioCtx.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
-    const oscillator = audioCtx.createOscillator();
-    oscillator.setPeriodicWave(wave);
-    setOscillator(oscillator)
-    oscillator.start();
-
-  }, [audioCtx])
+    return () => {
+      // unmount
+      if (isPlaying) {
+        oscRef.current.disconnect(audioContextRef.current.destination)
+      }
+    };
+  }, [])
 
 
   async function playNote(id: number) {
-    oscillator.connect(audioCtx.destination)
+    const osc = await initOscillator()
+    audioContextRef.current.resume()
     setCurrentNote(id)
-    oscillator.frequency.setValueAtTime((pianoNotes[id].frequency), audioCtx.currentTime)
+    osc.frequency.value = pianoNotes[id].frequency
   }
 
 
+  async function playScale() {
+    const osc = await initOscillator()
+    audioContextRef.current.resume()
 
-  function playScale() {
-
-    oscillator.connect(audioCtx.destination)
-
+    const playLength = notes.length / 2
     for (let i = 0; i < notes.length; i++) {
-      const time = audioCtx.currentTime + (i * 0.5)
+      const time = (i * 0.5) * 1000
       noteTimeouts.push(setTimeout(() => {
+        osc.frequency.value = notes[i].frequency
         setCurrentNote(pianoNotes.findIndex(n => n.frequency === notes[i].frequency))
         setNoteTimeouts(noteTimeouts.slice(1))
-      }, time * 1000))
-      oscillator.frequency.setValueAtTime(notes[i].frequency, time)
+      }, time))
     }
-    oscillator.stop(audioCtx.currentTime + 4)
+    noteTimeouts.push(setTimeout(() => {
+      setIsPlaying(false)
+      setCurrentNote(-1)
+    }, (notes.length * 0.5) * 1000))
+    osc.stop(audioContextRef.current.currentTime + playLength)
   }
 
   function stop() {
-    oscillator.disconnect(audioCtx.destination)
+    if (!isPlaying) return
+    audioContextRef.current.suspend()
+    oscRef.current.disconnect(audioContextRef.current.destination)
     noteTimeouts.forEach(t => clearTimeout(t))
     setCurrentNote(-1)
+    setIsPlaying(false)
   }
   return (
     <>
