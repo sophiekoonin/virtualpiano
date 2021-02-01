@@ -62,7 +62,6 @@ export default function Piano({ octaves = 2, currentNotes, play, stop, pedal }: 
   const numNotes = octaves * 12
   const whiteKeys = []
   const blackKeys = []
-
   for (let i = 0; i < (numNotes); i++) {
     const keyColour = NOTE_COLOURS[i % 12]
     const key = {

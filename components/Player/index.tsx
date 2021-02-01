@@ -9,7 +9,7 @@ type Props = {
   notes: Array<Note>
 }
 
-function generatePianoNotes(numOctaves: number, startingOctave: number) {
+function generatePianoNotes(numOctaves: number, startingOctave: number): Note[] {
   return Array.from({ length: numOctaves }, ((_, i) => startingOctave + i)).reduce((acc, i) => {
     // slice off the last element of each octave, as it's a dupe of the one next
     return [...acc, ...generateOctave('C', i).slice(0, 12)]
@@ -112,12 +112,15 @@ export default function Player({ notes }: Props) {
 
   function stopAll() {
     if (!isPlaying) return
-
-    disconnectAll()
-    audioContextRef.current.suspend()
-    noteTimeouts.forEach(t => clearTimeout(t))
-    setCurrentNotes([])
-    setIsPlaying(false)
+    try {
+      disconnectAll()
+      audioContextRef.current.suspend()
+      noteTimeouts.forEach(t => clearTimeout(t))
+      setCurrentNotes([])
+      setIsPlaying(false)
+    } catch (err) {
+      // we... don't really care
+    }
   }
 
   function stop(id: number) {
@@ -127,10 +130,11 @@ export default function Player({ notes }: Props) {
     // remove note from current notes
     const idx = currentNotes.indexOf(id)
     if (idx > -1) {
-      setCurrentNotes(currentNotes.length > 1 ? currentNotes.splice(idx, 1) : [])
+      const ns = currentNotes
+      ns.splice(idx, 1)
+      setCurrentNotes(ns)
     }
     osc.stop(0)
-    osc.disconnect(audioContextRef.current.destination)
   }
 
   return (
@@ -139,6 +143,7 @@ export default function Player({ notes }: Props) {
       <button onClick={() => stopAll()} type="button">Stop</button>
       <label htmlFor="pedal"><input checked={pedal} onChange={() => setPedal(!pedal)} id="pedal" type="checkbox" />Pedal</label>
       <Piano octaves={2} currentNotes={currentNotes} play={playNote} pedal={pedal} stop={stop} />
+      <p>Notes playing: {currentNotes.sort((a, b) => a - b).map(n => pianoNotes[n].letter)}</p>
     </>
   )
 }
