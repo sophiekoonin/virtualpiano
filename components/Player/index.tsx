@@ -24,7 +24,7 @@ export default function Player({ notes }: Props) {
   const [currentNotes, setCurrentNotes] = useState([])
   const [noteTimeouts, setNoteTimeouts] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
-  const [oscillators, setOscillators] = useState<OscillatorMap>()
+  const [oscillators, setOscillators] = useState<OscillatorMap>({})
   const [pedal, setPedal] = useState(false)
   const audioContextRef = useRef<AudioContext>()
   const pianoNotes = generatePianoNotes(2, 4)
@@ -44,12 +44,25 @@ export default function Player({ notes }: Props) {
       osc.connect(audioCtx.destination)
       osc.start();
       setIsPlaying(true)
-      setOscillators({ 0: osc })
+      setOscillators({ ...oscillators, [id]: osc })
 
       resolve(osc)
     })
 
   }
+
+  useEffect(() => {
+    if (currentNotes.length === 0) {
+      setIsPlaying(false)
+    }
+
+  }, [currentNotes])
+
+  useEffect(() => {
+    if (pedal === false) {
+      disconnectAll()
+    }
+  }, [pedal])
 
   useEffect(() => {
     return () => {
@@ -62,7 +75,12 @@ export default function Player({ notes }: Props) {
 
 
   function disconnectAll() {
-    Object.keys(oscillators).forEach(o => oscillators[o].disconnect(audioContextRef.current.destination))
+    Object.keys(oscillators).forEach(o => {
+      oscillators[o].stop()
+      oscillators[o].disconnect(audioContextRef.current.destination)
+    })
+    setOscillators({})
+
   }
   async function playNote(id: number) {
     const osc = await initOscillator(id)
@@ -92,30 +110,33 @@ export default function Player({ notes }: Props) {
     osc.stop(audioContextRef.current.currentTime + playLength)
   }
 
+  function stopAll() {
+    if (!isPlaying) return
+
+    disconnectAll()
+    audioContextRef.current.suspend()
+    noteTimeouts.forEach(t => clearTimeout(t))
+    setCurrentNotes([])
+    setIsPlaying(false)
+  }
+
   function stop(id: number) {
     if (!isPlaying) return
-    if (id === 999) {
-      disconnectAll()
-      audioContextRef.current.suspend()
-      noteTimeouts.forEach(t => clearTimeout(t))
-      setCurrentNotes([])
-      setIsPlaying(false)
-    } else {
-      const osc = oscillators[id]
-      if (osc == null) return
-      // remove note from current notes
-      const idx = currentNotes.indexOf(id)
-      if (idx > -1) {
-        setCurrentNotes(currentNotes.splice(idx, 1))
-      }
-      osc.disconnect(audioContextRef.current.destination)
+    const osc = oscillators[id]
+    if (osc == null) return
+    // remove note from current notes
+    const idx = currentNotes.indexOf(id)
+    if (idx > -1) {
+      setCurrentNotes(currentNotes.length > 1 ? currentNotes.splice(idx, 1) : [])
     }
+    osc.stop(0)
+    osc.disconnect(audioContextRef.current.destination)
   }
 
   return (
     <>
       <button onClick={() => playScale()} type="button">Play scale</button>
-      <button onClick={() => stop(999)} type="button">Stop</button>
+      <button onClick={() => stopAll()} type="button">Stop</button>
       <label htmlFor="pedal"><input checked={pedal} onChange={() => setPedal(!pedal)} id="pedal" type="checkbox" />Pedal</label>
       <Piano octaves={2} currentNotes={currentNotes} play={playNote} pedal={pedal} stop={stop} />
     </>

@@ -96,7 +96,6 @@ export default function Piano({ octaves = 2, currentNotes, play, stop, pedal }: 
     }
   }
 
-
   return (
     <svg className={styles.piano} width={whiteKeys.length * Widths.w}>
       <g className={styles.white}>
