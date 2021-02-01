@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import cx from 'classnames'
 
 import styles from './Piano.module.scss'
-
 
 // this is a React port of pianosvg
 // https://github.com/spacejack/pianosvg
@@ -10,18 +8,16 @@ import styles from './Piano.module.scss'
 // 128 midi notes in total
 const NUM_NOTES = 128
 
-// number of white and black notes in each octave
-// this is probs overkill to pull out into a constant but it makes
-// the code a bit easier to read
-const NUM_WHITE_NOTES = 7
-const NUM_BLACK_NOTES = 5
-
 const NOTE_COLOURS = ['w', 'b', 'w', 'b', 'w', 'w', 'b', 'w', 'b', 'w', 'b', 'w']
 
-const WHITE_WIDTH = 24
-const WHITE_HEIGHT = 120
-const BLACK_WIDTH = WHITE_WIDTH * 0.7
-const BLACK_HEIGHT = WHITE_HEIGHT * 0.6
+const Widths = {
+  w: 24,
+  b: 24 * 0.7
+}
+const Heights = {
+  w: 120,
+  b: 120 * 0.6
+}
 /** Count white keys included from 0 to id (not including id) */
 function wkCountToId(id: number) {
 
@@ -40,26 +36,29 @@ function wkCountToId(id: number) {
 function idToX(id: number) {
   const x = wkCountToId(id)
   if (NOTE_COLOURS[id % 12] === 'w') {
-    return x * WHITE_WIDTH
+    return x * Widths.w
   }
   // Black key offset
-  return x * WHITE_WIDTH - BLACK_WIDTH / 2
+  return x * Widths.w - Widths.b / 2
 }
 
 type Props = {
   octaves: number,
-  currentNote: number,
+  currentNotes: Array<number>,
   play: (id: number) => void,
-  stop: () => void
+  stop: (id: number) => void
   pedal: boolean
 }
 
-type Key = {
-  id: string,
-  x: string,
+type KeyProps = {
+  id: number,
+  colour: string,
+  x: number,
 }
 
-export default function Piano({ octaves = 2, currentNote, play, stop, pedal }: Props) {
+
+
+export default function Piano({ octaves = 2, currentNotes, play, stop, pedal }: Props) {
   const numNotes = octaves * 12
   const whiteKeys = []
   const blackKeys = []
@@ -73,25 +72,40 @@ export default function Piano({ octaves = 2, currentNote, play, stop, pedal }: P
     keyColour === 'w' ? whiteKeys.push(key) : blackKeys.push(key)
   }
 
+
+  function Key({ colour, id, x }: KeyProps) {
+    return (<rect
+      onClick={() => toggleNote(id)}
+      onMouseDown={() => pedal ? null : play(id)}
+      onMouseUp={() => pedal ? null : stop(id)}
+      tabIndex={id}
+      key={id}
+      className={cx(styles.key, { [styles.pressed]: currentNotes.includes(id) })}
+      x={x}
+      width={Widths[colour]}
+      height={Heights[colour]}
+      data-keyid={id} />)
+  }
+
   function toggleNote(id: number) {
     if (!pedal) return
-    if (currentNote !== id) {
-      stop()
+    if (!currentNotes.includes(id)) {
       play(id)
     } else {
-      stop()
+      stop(id)
     }
   }
 
 
   return (
-    <svg className={styles.piano} width={whiteKeys.length * WHITE_WIDTH}>
+    <svg className={styles.piano} width={whiteKeys.length * Widths.w}>
       <g className={styles.white}>
-        {whiteKeys.map(k => <rect onClick={() => toggleNote(k.id)} onMouseDown={() => pedal ? null : play(k.id)} onMouseUp={() => pedal ? null : stop()} tabIndex={k.id} key={k.id} className={cx(styles.white, { [styles.pressed]: currentNote === k.id })} x={k.x} width={WHITE_WIDTH} height={WHITE_HEIGHT} />)}
+        {whiteKeys.map(k => <Key colour="w" x={k.x} id={k.id} key={k.id} />)}
       </g>
       <g className={styles.black}>
-        {blackKeys.map(k => <rect tabIndex={k.id} onMouseDown={() => play(k.id)} onMouseUp={stop} key={k.id} className={cx(styles.black, { [styles.pressed]: currentNote === k.id })} x={k.x} width={BLACK_WIDTH} height={BLACK_HEIGHT} />)}
+        {blackKeys.map(k => <Key colour="b" x={k.x} id={k.id} key={k.id} />)}
       </g>
     </svg>
   )
 }
+

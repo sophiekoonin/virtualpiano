@@ -1,21 +1,19 @@
 .piano {
   margin: 2rem 0;
-  .key {
-    stroke: black;
-    stroke-width: 1px;
-    cursor: pointer;
-    &:hover,
-    .pressed {
-      fill: rgb(161, 128, 223);
-    }
-  }
   .white {
-    @extend .key;
     fill: #fff;
   }
 
   .black {
-    @extend .key;
     fill: rgb(22, 22, 22);
+  }
+  .key {
+    stroke: black;
+    stroke-width: 1px;
+    cursor: pointer;
+  }
+  .key:hover,
+  .pressed {
+    fill: rgb(161, 128, 223) !important;
   }
 }
