@@ -7,7 +7,6 @@ import Piano from './Piano';
 
 type Props = {
   notes: Array<Note>
-  ready: boolean
 }
 
 function generatePianoNotes(numOctaves: number, startingOctave: number) {
@@ -17,7 +16,7 @@ function generatePianoNotes(numOctaves: number, startingOctave: number) {
   }, [])
 }
 
-export default function Player({ notes, ready }: Props) {
+export default function Player({ notes }: Props) {
   const [currentNote, setCurrentNote] = useState(-1)
   const [noteTimeouts, setNoteTimeouts] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
