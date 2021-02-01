@@ -1,7 +1,8 @@
 
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { generateOctave, Note } from '../utils/notes';
 import { real, imag } from '../utils/wavetable'
+import { AudioContext } from './AudioContext';
 import Piano from './Piano';
 
 
@@ -19,27 +20,25 @@ function generatePianoNotes(numOctaves: number, startingOctave: number) {
 export default function Player({ notes }: Props) {
   const [currentNote, setCurrentNote] = useState(-1)
   const [noteTimeouts, setNoteTimeouts] = useState([])
-  const [audioCtx, setAudioCtx] = useState<AudioContext>()
   const [oscillator, setOscillator] = useState<OscillatorNode>()
   const pianoNotes = generatePianoNotes(2, 4)
 
+  const { audioCtx } = useContext(AudioContext)
 
-  function setupAudioCtx() {
-    const ac = new window.AudioContext()
-    const wave = ac.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
-    const oscillator = ac.createOscillator();
+  useEffect(() => {
+    if (audioCtx == null) {
+      return
+    }
+    const wave = audioCtx.createPeriodicWave(new Float32Array(real), new Float32Array(imag));
+    const oscillator = audioCtx.createOscillator();
     oscillator.setPeriodicWave(wave);
-    setAudioCtx(ac)
     setOscillator(oscillator)
     oscillator.start();
 
-  }
+  }, [audioCtx])
 
 
   async function playNote(id: number) {
-    if (audioCtx == null || oscillator == null) {
-      return
-    }
     oscillator.connect(audioCtx.destination)
     setCurrentNote(id)
     oscillator.frequency.setValueAtTime((pianoNotes[id].frequency), audioCtx.currentTime)
@@ -48,9 +47,7 @@ export default function Player({ notes }: Props) {
 
 
   function playScale() {
-    if (audioCtx == null || oscillator == null) {
-      return
-    }
+
     oscillator.connect(audioCtx.destination)
 
     for (let i = 0; i < notes.length; i++) {
@@ -71,7 +68,6 @@ export default function Player({ notes }: Props) {
   }
   return (
     <>
-      {audioCtx != null && oscillator != null ? <span>Ready</span> : <button onClick={() => setupAudioCtx()} type="button">Power on</button>}
       <button onClick={() => playScale()} type="button">Play scale</button>
       <button onClick={() => stop()} type="button">Stop</button>
       <Piano octaves={2} currentNote={currentNote} play={playNote} stop={stop} />

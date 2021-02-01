@@ -2,10 +2,11 @@ import '../styles/globals.css';
 import Head from 'next/head';
 
 import { AppProps } from 'next/app'
+import AudioProvider from '../components/AudioContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <AudioProvider>
       <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -13,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <Component {...pageProps} />
-    </div>
+    </AudioProvider>
   )
 }
 
