@@ -158,7 +158,7 @@ export default function Player({ scale, chord }: Props) {
       <button onClick={() => stopAll()} type="button">Stop</button>
       <label htmlFor="pedal"><input checked={pedal} onChange={() => setPedal(!pedal)} id="pedal" type="checkbox" />Pedal</label>
       <Piano octaves={3} currentNotes={currentNotes} play={playNote} pedal={pedal} stop={stop} />
-      <p>Notes playing: {currentNotes.sort((a, b) => a - b).map(n => pianoNotes[n].letter)}</p>
+      <p>Notes playing: {currentNotes.sort((a, b) => a - b).map(n => pianoNotes[n].letter).join(' ')}</p>
     </>
   )
 }

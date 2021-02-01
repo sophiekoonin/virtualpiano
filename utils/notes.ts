@@ -2,6 +2,25 @@ import { A4 } from "./constants"
 
 const FREQUENCY_RATIO = 1.059463
 
+// it looks weird that this array has sharps in, but i'm using sharps everywhere for consistency
+export const KeysWithFlats = ["C", "F", "A#", "F#", "G#", "C#"]
+export const KeysWithSharps = ["G", "D", "A", "E", "B", "F#"]
+
+export const RelativeMinors = Object.freeze({
+  C: "A",
+  "C#": "A#",
+  D: "B",
+  "D#": "C", // Eb
+  E: "F#",
+  F: "D",
+  "F#": "D#",
+  G: "E",
+  "G#": "F", // Ab
+  A: "F#",
+  "A#": "G", // Bb
+  B: "G#"
+})
+
 export const SharpToFlat = Object.freeze({
   "A#": "Bb",
   "C#": "Db",
