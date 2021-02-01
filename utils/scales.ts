@@ -1,4 +1,4 @@
-import { generateOctave, Note } from "./notes"
+import { calculateNotePattern, generateOctaves, Note } from "./notes"
 
 export const Scales = Object.freeze({
   MAJOR: "Major",
@@ -30,16 +30,7 @@ export const ScalePatterns = Object.freeze({
 
 export function calcScale(rootNote: string, type: string): Array<Note> {
   // start on octave 4, we may want to change this later
-  const octave = generateOctave(rootNote, 4)
+  const octave = generateOctaves(rootNote, 4, 1)
   const scalePattern = ScalePatterns[type]
-  let currentPosition = 0 // root
-  const notes = []
-  // iterate through the pattern incrementing the position accordingly
-  // and get the note at that position.
-  for (let pos of scalePattern) {
-    currentPosition += pos
-    notes.push(octave[currentPosition])
-  }
-
-  return notes
+  return calculateNotePattern(octave, scalePattern)
 }

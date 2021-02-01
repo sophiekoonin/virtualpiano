@@ -30,28 +30,39 @@ export type Note = { letter: string; octave: number; frequency: number }
 export type NoteLetter = typeof notes[number]
 
 // generate an array containing all 12 semitones in octave, from root to root + 8
-export function generateOctave(
+export function generateOctaves(
   rootNote: NoteLetter,
-  startingOctave: number = 4
+  startingOctave: number = 4,
+  numOctaves: number = 1
 ) {
+  let currentOctave = startingOctave
   const octaveNotes: Array<Note> = []
   const noteIndex = notes.indexOf(rootNote)
-  // first populate the array with all notes from root note through to G#
-  for (let i = noteIndex; i < notes.length; i++) {
-    octaveNotes.push({
-      letter: notes[i],
-      octave: startingOctave,
-      frequency: calcFrequency(notes[i], startingOctave)
-    })
+  for (let j = 0; j < numOctaves; j++) {
+    // first populate the array with all notes from root note through to G#
+    for (let i = noteIndex; i < notes.length; i++) {
+      octaveNotes.push({
+        letter: notes[i],
+        octave: currentOctave,
+        frequency: calcFrequency(notes[i], currentOctave)
+      })
+    }
+    // then add the remaining notes from before the root note
+    for (let i = 0; i < noteIndex; i++) {
+      octaveNotes.push({
+        letter: notes[i],
+        octave: currentOctave + 1,
+        frequency: calcFrequency(notes[i], currentOctave + 1)
+      })
+    }
+    currentOctave += 1
   }
-  // then add the remaining notes from before the root note
-  for (let i = 0; i <= noteIndex; i++) {
-    octaveNotes.push({
-      letter: notes[i],
-      octave: startingOctave + 1,
-      frequency: calcFrequency(notes[i], startingOctave + 1)
-    })
-  }
+  // finally, whack on the last root note + 8
+  octaveNotes.push({
+    letter: notes[noteIndex],
+    octave: currentOctave,
+    frequency: calcFrequency(notes[noteIndex], currentOctave)
+  })
   return octaveNotes
 }
 
@@ -71,4 +82,17 @@ export function calcFrequency(note: NoteLetter, octave: number): number {
   const freq = A4 * Math.pow(FREQUENCY_RATIO, steps)
   // round to 1 d.p.
   return Math.round(freq * 10) / 10
+}
+
+export function calculateNotePattern(octave: Note[], pattern: number[]) {
+  let currentPosition = 0 // root
+  const notes = []
+  // iterate through the pattern incrementing the position accordingly
+  // and get the note at that position.
+  for (let pos of pattern) {
+    currentPosition += pos
+    notes.push(octave[currentPosition])
+  }
+
+  return notes
 }
