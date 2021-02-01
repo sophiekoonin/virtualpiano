@@ -1,7 +1,7 @@
 
 import { useContext, useState, useEffect, useRef } from 'react';
-import { generateOctave, Note } from '../utils/notes';
-import { real, imag } from '../utils/wavetable'
+import { generateOctave, Note } from '../../utils/notes';
+import { real, imag } from '../../utils/wavetable'
 import Piano from './Piano';
 
 
@@ -20,12 +20,14 @@ export default function Player({ notes }: Props) {
   const [currentNote, setCurrentNote] = useState(-1)
   const [noteTimeouts, setNoteTimeouts] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [pedal, setPedal] = useState(false)
   const audioContextRef = useRef<AudioContext>()
   const oscRef = useRef<OscillatorNode>()
   const pianoNotes = generatePianoNotes(2, 4)
+
   async function initOscillator(): Promise<OscillatorNode> {
     return new Promise((resolve) => {
-      let audioCtx;
+      let audioCtx: AudioContext;
       if (audioContextRef.current == null) {
         audioCtx = new window.AudioContext()
         audioContextRef.current = audioCtx
@@ -91,11 +93,13 @@ export default function Player({ notes }: Props) {
     setCurrentNote(-1)
     setIsPlaying(false)
   }
+
   return (
     <>
       <button onClick={() => playScale()} type="button">Play scale</button>
       <button onClick={() => stop()} type="button">Stop</button>
-      <Piano octaves={2} currentNote={currentNote} play={playNote} stop={stop} />
+      <label htmlFor="pedal"><input checked={pedal} onChange={() => setPedal(!pedal)} id="pedal" type="checkbox" />Pedal</label>
+      <Piano octaves={2} currentNote={currentNote} play={playNote} pedal={pedal} stop={stop} />
     </>
   )
 }

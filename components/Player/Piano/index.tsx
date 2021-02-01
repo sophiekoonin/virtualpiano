@@ -51,6 +51,7 @@ type Props = {
   currentNote: number,
   play: (id: number) => void,
   stop: () => void
+  pedal: boolean
 }
 
 type Key = {
@@ -58,7 +59,7 @@ type Key = {
   x: string,
 }
 
-export default function Piano({ octaves = 2, currentNote, play, stop }: Props) {
+export default function Piano({ octaves = 2, currentNote, play, stop, pedal }: Props) {
   const numNotes = octaves * 12
   const whiteKeys = []
   const blackKeys = []
@@ -72,14 +73,21 @@ export default function Piano({ octaves = 2, currentNote, play, stop }: Props) {
     keyColour === 'w' ? whiteKeys.push(key) : blackKeys.push(key)
   }
 
-  // function onNotePress(id: number) {
-  //   setCurrentNote(id)
-  // }
+  function toggleNote(id: number) {
+    if (!pedal) return
+    if (currentNote !== id) {
+      stop()
+      play(id)
+    } else {
+      stop()
+    }
+  }
+
 
   return (
     <svg className={styles.piano} width={whiteKeys.length * WHITE_WIDTH}>
       <g className={styles.white}>
-        {whiteKeys.map(k => <rect onMouseDown={() => play(k.id)} onMouseUp={stop} tabIndex={k.id} key={k.id} className={cx(styles.white, { [styles.pressed]: currentNote === k.id })} x={k.x} width={WHITE_WIDTH} height={WHITE_HEIGHT} />)}
+        {whiteKeys.map(k => <rect onClick={() => toggleNote(k.id)} onMouseDown={() => pedal ? null : play(k.id)} onMouseUp={() => pedal ? null : stop()} tabIndex={k.id} key={k.id} className={cx(styles.white, { [styles.pressed]: currentNote === k.id })} x={k.x} width={WHITE_WIDTH} height={WHITE_HEIGHT} />)}
       </g>
       <g className={styles.black}>
         {blackKeys.map(k => <rect tabIndex={k.id} onMouseDown={() => play(k.id)} onMouseUp={stop} key={k.id} className={cx(styles.black, { [styles.pressed]: currentNote === k.id })} x={k.x} width={BLACK_WIDTH} height={BLACK_HEIGHT} />)}
