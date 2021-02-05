@@ -77,6 +77,7 @@ export default function Piano({ octaves = 2, currentNotes, play, stop, pedal }: 
     return (<rect
       onClick={() => toggleNote(id)}
       onMouseDown={() => pedal ? null : play(id)}
+      onMouseOut={() => pedal ? null : stop(id)}
       onMouseUp={() => pedal ? null : stop(id)}
       tabIndex={id}
       key={id}
