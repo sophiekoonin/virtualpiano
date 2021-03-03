@@ -1,7 +1,5 @@
 import { A4 } from "./constants"
 
-const FREQUENCY_RATIO = 1.059463
-
 // it looks weird that this array has sharps in, but i'm using sharps everywhere for consistency
 export const KeysWithFlats = ["C", "F", "A#", "F#", "G#", "C#"]
 export const KeysWithSharps = ["G", "D", "A", "E", "B", "F#"]
