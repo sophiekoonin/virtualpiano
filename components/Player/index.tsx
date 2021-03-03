@@ -83,7 +83,6 @@ export default function Player({ scale, chord }: Props) {
   async function playNote(id: number) {
     const osc = await initOscillator()
     setOscillators({ ...oscillators, [id]: osc })
-    // audioContextRef.current.resume()
     setCurrentNotes(pedal ? [...currentNotes, id] : [id])
     osc.frequency.value = pianoNotes[id].frequency
   }

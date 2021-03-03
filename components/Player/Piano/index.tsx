@@ -73,7 +73,6 @@ export default function Piano({ octaves = 2, currentNotes, play, stop, pedal }: 
 
 
   function Key({ colour, id, x }: KeyProps) {
-    if (id === 5) console.log(currentNotes)
     return (<rect
       onClick={() => toggleNote(id)}
       onMouseDown={() => pedal ? null : play(id)}

@@ -94,11 +94,14 @@ export function calcInterval(rootNote: NoteLetter, intervalNote: NoteLetter) {
 // takes a note and its octave, e.g. A, 4, and return frequency.
 export function calcFrequency(note: NoteLetter, octave: number): number {
   const intervalFromA = SemitoneIntervals[note]
-  // our base is octave 4, so subtract our note's octave from that, and multiply by number of semitones in an octave
+  // our base is octave 4, so subtract our note's octave from that,
+  // and multiply by number of semitones in an octave
   // then add the interval
-  // maths is hard
+
   const steps = (4 - octave) * -12 + intervalFromA
-  const freq = A4 * Math.pow(FREQUENCY_RATIO, steps)
+
+  // f = 440Hz * 2^n/12
+  const freq = A4 * Math.pow(2, 3 / 12)
   // round to 1 d.p.
   return Math.round(freq * 10) / 10
 }

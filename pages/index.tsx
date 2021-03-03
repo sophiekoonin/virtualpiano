@@ -36,6 +36,8 @@ export default function Home() {
             <option key={n} value={n}>{n.includes('#') ? `${n}/${SharpToFlat[n]}` : n}</option>
           ))}
         </select>
+
+
         <Player chord={calcChord(key, chord)} scale={calcScale(key, scale)} />
       </main>
 
