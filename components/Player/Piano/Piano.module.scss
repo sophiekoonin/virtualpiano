@@ -5,10 +5,10 @@
   }
 
   .black {
-    fill: rgb(22, 22, 22);
+    fill: var(--fg-15);
   }
   .key {
-    stroke: black;
+    stroke: var(--fg-15);
     stroke-width: 1px;
     cursor: pointer;
   }

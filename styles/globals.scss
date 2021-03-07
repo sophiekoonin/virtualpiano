@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "Neon Tubes 2";
+  src: url("/fonts/NeonTubes2.woff") format("woff2");
+}
+@font-face {
+  font-family: "Inter var";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url("/fonts/Inter-roman.var.woff2?v=3.13") format("woff2");
+}
+@font-face {
+  font-family: "Inter var";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  font-named-instance: "Italic";
+  src: url("/fonts/Inter-italic.var.woff2?v=3.13") format("woff2");
+}
+
+html,
+body {
+  background-color: #d0eef0;
+  color: var(--fg);
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  font-family: "Inter var", sans-serif;
+}
+
+a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --fg: hsl(240, 2%, 27%);
+  --fg-15: hsl(240, 2%, 15%);
+  --accent: hsl(266, 82%, 78%);
+  --cherry-blossom-86: hsla(350, 100%, 86%, 1);
+  --cherry-blossom-70: hsla(350, 100%, 70%, 1);
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

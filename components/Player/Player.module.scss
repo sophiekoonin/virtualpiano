@@ -1,0 +1,13 @@
+.controls {
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    appearance: none;
+    padding: 0.5rem;
+    border: 0;
+    background: var(--accent)
+  }
+
+}

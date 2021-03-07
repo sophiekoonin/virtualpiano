@@ -1,0 +1,79 @@
+.toggle-fieldset {
+  border: none;
+  width: 50%;
+  appearance: none;
+  .toggle {
+    display: block;
+    height: 2rem;
+    position: relative;
+    margin-top: 3px;
+    background-color: #eee;
+    border-radius: 1rem;
+    text-align: center;
+    width: auto;
+    @media screen and (min-width: 740px) {
+      max-width: 50vw;
+    }
+
+    .label,
+    .switch {
+      font-size: 0.8rem;
+      color: --var(--fg);
+      line-height: 2rem;
+    }
+
+    .label {
+      cursor: pointer;
+      position: relative;
+      width: 50%;
+      height: 100%;
+      margin: 0;
+      text-align: center;
+      float: left;
+    }
+
+    .input {
+      position: absolute;
+      opacity: 0;
+      &:focus {
+        & + .label {
+          border: 1px solid blue;
+        }
+
+        & ~ .switch {
+          border: 1px solid blue;
+        }
+      }
+    }
+
+    .switch {
+      cursor: pointer;
+      display: block;
+      border-radius: 1rem;
+      transition: all 0.2s ease-out;
+      position: absolute;
+      top: 0;
+      padding: 0;
+      width: 50%;
+      font-variation-settings: "wght" 700;
+      height: 100%;
+      border: solid 1px var(--accent);
+      background-color: white;
+      left: 0;
+
+      &:hover {
+        border: 1px solid var(--accent);
+        background: white;
+      }
+
+      &:active {
+        background: darken(grey, 5%);
+        border: 1px solid var(--accent);
+      }
+    }
+
+    .input:last-of-type:checked ~ .switch {
+      left: 50%;
+    }
+  }
+}
