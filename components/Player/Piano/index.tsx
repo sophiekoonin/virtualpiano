@@ -47,7 +47,6 @@ function wkCountToId(id: number) {
 
 function idToX(id: number) {
   const x = wkCountToId(id)
-  console.log(id, x)
   if (NOTE_COLOURS[id % 12] === "w") {
     return x * Widths.w
   }
@@ -146,10 +145,18 @@ export default function Piano({
         height={Heights.w + 30}
         rx="8"
       />
+      <rect
+        x="60"
+        width="85%"
+        y="10"
+        rx="5"
+        height="3px"
+        fill="hsl(266, 82%, 70%)"
+      />
       <g id="buttons">
-        <circle r="5" cx="15" cy="15" fill="#fffea6" />
-        <circle r="5" cx="30" cy="15" fill="#fbdaff" />
-        <circle r="5" cx="45" cy="15" fill="#dafffa" />
+        <circle r="5" cx="15" cy="12.5" fill="#fffea6" />
+        <circle r="5" cx="30" cy="12.5" fill="#fbdaff" />
+        <circle r="5" cx="45" cy="12.5" fill="#dafffa" />
       </g>
       <g className={styles.white}>
         {whiteKeys.map((k) => (

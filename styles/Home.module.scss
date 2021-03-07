@@ -32,7 +32,6 @@
         margin-right: 1rem;
       }
     }
-    position: relative;
     height: 2rem;
     select {
       width: 100%;
@@ -40,21 +39,23 @@
       border-radius: 6px;
       border: 2px solid var(--accent);
       padding: 0.5rem;
+      padding-right: 1.5rem;
+      background-image: url('../public/images/arrow.svg');
+      background-position: right;
+      background-size:
+      auto,
+      34px 100%,
+      1px 100%;
+  background-repeat: no-repeat;
     }
-    &:after {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding-right: 5px;
-      color: var(--accent);
-      line-height: 2rem;
-      content: "\25bc";
-      height: 100%;
-    }
+
   }
 
   .selectors {
     display: flex; 
     align-items: center;
+  }
+  .footer {
+    padding: 2rem 0;
   }
 }
