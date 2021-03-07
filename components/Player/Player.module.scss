@@ -4,6 +4,7 @@
     &:first-of-type {
       margin-right: 1rem;
     }
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -11,7 +12,10 @@
     appearance: none;
     padding: 0.5rem;
     border: 0;
-    background: var(--accent)
+    background: var(--accent);
+    &:hover {
+      background: var(--highlight)
+    }
   }
 
 }

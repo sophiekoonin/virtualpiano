@@ -87,21 +87,36 @@ export default function Piano({
     keyColour === "w" ? whiteKeys.push(key) : blackKeys.push(key)
   }
 
+  function handleKeyAction(event: KeyboardEvent, callback: () => void) {
+    if (event.key === " " || event.code === "Space") {
+      callback()
+    }
+  }
+
   function Key({ colour, id, x }: KeyProps) {
+    const playNote = () => (pedal ? null : play(id))
+    const stopNote = () => (pedal ? null : stop(id))
     const props = {
       className: cx(styles.key, {
         [styles.pressed]: currentNotes.includes(id)
       }),
       onClick: () => toggleNote(id),
-      onMouseDown: () => (pedal ? null : play(id)),
+      onMouseDown: playNote,
       role: "button",
-      onMouseOut: () => (pedal ? null : stop(id)),
-      onMouseUp: () => (pedal ? null : stop(id)),
-      tabIndex: id,
+      onMouseOut: stopNote,
+      onMouseUp: stopNote,
+      onKeyPress: (e: KeyboardEvent) =>
+        handleKeyAction(e, () => toggleNote(id)),
+      onKeyDown: (e: KeyboardEvent) => handleKeyAction(e, playNote),
+      onKeyUp: (e: KeyboardEvent) => handleKeyAction(e, stopNote),
+      tabIndex: x + 10,
       key: id,
       "data-keyid": id
     }
+
+    /* Note to reader: ordinarily I'd use a button for stuff like this, but you can't have a button inside an SVG */
     return colour === "w" ? (
+      // @ts-expect-error
       <g {...props}>
         <path
           d={`M${
@@ -117,6 +132,7 @@ export default function Piano({
         />
       </g>
     ) : (
+      // @ts-expect-errorw
       <g {...props}>
         <path
           d={`M${

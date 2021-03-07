@@ -11,7 +11,9 @@
     font-family: "Neon Glow", cursive;
     color: hsl(350, 100%, 80%);
   }
+
   .main {
+    max-width: 60%;
     border-radius: 25px;
     padding: 2rem 5rem;
     background: hsl(43, 100%, 99%);
@@ -19,10 +21,32 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    .instructions {
+      &-button  {
+        cursor: pointer;
+        display: block;
+        border-radius: 8px;
+        padding: 0.5rem;
+        font-variation-settings: "wght" 700;
+        color: #444444;
+        border:0;
+        background-color:  var(--accent);
+        &:hover {
+          background-color: var(--highlight);
+        }
+      }
+      height: 0;
+      overflow: hidden;
+      border-radius: 6px;
+      max-width: 80%;
+      padding: 1rem;
+      &-expanded {
+        height: auto;
+       }
+    }
   }
 
-  .select {
-    &-wrapper {
+  .select-wrapper {
       label {
         display: inline-block;
         font-size: 0.8rem;
@@ -31,9 +55,8 @@
       &:first-of-type {
         margin-right: 1rem;
       }
-    }
-    height: 2rem;
-    select {
+      select {
+      height: 2rem;
       width: 100%;
       appearance: none;
       border-radius: 6px;
@@ -46,9 +69,9 @@
       auto,
       34px 100%,
       1px 100%;
-  background-repeat: no-repeat;
+      background-repeat: no-repeat;
     }
-
+  
   }
 
   .selectors {
@@ -56,6 +79,7 @@
     align-items: center;
   }
   .footer {
+    text-align: center;
     padding: 2rem 0;
   }
 }

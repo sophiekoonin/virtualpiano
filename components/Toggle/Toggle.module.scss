@@ -24,6 +24,7 @@
 
     .label {
       cursor: pointer;
+      border-radius: 8px;
       position: relative;
       width: 50%;
       height: 100%;
@@ -37,11 +38,7 @@
       opacity: 0;
       &:focus {
         & + .label {
-          border: 1px solid blue;
-        }
-
-        & ~ .switch {
-          border: 1px solid blue;
+          box-shadow: 0px 0px 1px 3px var(--cherry-blossom-70);
         }
       }
     }
@@ -53,22 +50,19 @@
       transition: all 0.2s ease-out;
       position: absolute;
       top: 0;
+      left: 0;
       padding: 0;
       width: 50%;
       font-variation-settings: "wght" 700;
       height: 100%;
-      border: solid 1px var(--accent);
-      background-color: white;
-      left: 0;
+      color: #444444;
+      border:0;
+      background-color:  var(--accent);
+;
 
-      &:hover {
-        border: 1px solid var(--accent);
-        background: white;
-      }
 
-      &:active {
-        background: darken(grey, 5%);
-        border: 1px solid var(--accent);
+      &:active, &:hover {
+        background: var(--highlight);
       }
     }
 

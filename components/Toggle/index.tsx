@@ -1,21 +1,21 @@
-import { SyntheticEvent } from 'react'
-import cx from 'classnames'
-import styles from './Toggle.module.scss'
+import { SyntheticEvent } from "react"
+import cx from "classnames"
+import styles from "./Toggle.module.scss"
 type Option = {
-  id: string,
-  label: string,
-  value: string,
-  checked: boolean,
-
+  label: string
+  value: string
+  checked: boolean
+  tabIndex: number
 }
 type Props = {
-  legend: string,
-  onChange: (e: SyntheticEvent<HTMLInputElement | HTMLLabelElement | HTMLButtonElement>) => void,
-  optionLeft: Option,
-  optionRight: Option,
-  className?: string,
+  legend: string
+  onChange: (
+    e: SyntheticEvent<HTMLInputElement | HTMLLabelElement | HTMLButtonElement>
+  ) => void
+  optionLeft: Option
+  optionRight: Option
+  className?: string
 }
-
 
 export default function Toggle({
   legend,
@@ -28,21 +28,21 @@ export default function Toggle({
   return (
     <fieldset
       {...otherProps}
-      className={cx(styles['toggle-fieldset'], className)}
+      className={cx(styles["toggle-fieldset"], className)}
     >
       <legend className="visually-hidden">{legend}</legend>
       <div className={styles.toggle}>
         <input
           type="radio"
-          id={optionLeft.id}
+          id={optionLeft.value}
           value={optionLeft.value}
-          key={optionLeft.id}
           onChange={onChange}
           className={styles.input}
           checked={optionLeft.checked}
+          tabIndex={optionLeft.tabIndex}
         />
         <label
-          htmlFor={optionLeft.id}
+          htmlFor={optionLeft.value}
           className={styles.label}
           onClick={optionRight.checked ? onChange : undefined}
         >
@@ -50,15 +50,15 @@ export default function Toggle({
         </label>
         <input
           type="radio"
-          id={optionRight.id}
+          id={optionRight.value}
           value={optionRight.value}
-          key={optionRight.id}
           checked={optionRight.checked}
           onChange={onChange}
           className={styles.input}
+          tabIndex={optionRight.tabIndex}
         />
         <label
-          htmlFor={optionRight.id}
+          htmlFor={optionRight.value}
           className={styles.label}
           onClick={optionRight.checked ? onChange : undefined}
         >

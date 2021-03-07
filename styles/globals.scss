@@ -25,7 +25,7 @@ body {
   color: var(--fg);
   padding: 0;
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "Inter var", sans-serif;
 }
 
@@ -45,8 +45,10 @@ a {
 :root {
   --fg: hsl(240, 2%, 27%);
   --fg-15: hsl(240, 2%, 15%);
-  --accent: hsl(266, 82%, 78%);
-  --cherry-blossom-86: hsla(350, 100%, 86%, 1);
+  --accent: hsl(266, 82%, 85%);
+  --accent-68: hsl(266, 82%, 68%);
+  --accent-88: hsl(266, 82%, 88%);
+  --highlight: hsla(350, 100%, 86%, 1);
   --cherry-blossom-70: hsla(350, 100%, 70%, 1);
 }
 
@@ -58,4 +60,13 @@ a {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+button, input, a, select {
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    box-shadow: 0px 0px 2px 3px var(--cherry-blossom-70);
+  }
 }

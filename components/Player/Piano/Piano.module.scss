@@ -14,14 +14,14 @@
     stroke-width: 1px;
     cursor: pointer;
 
-    &:hover {
+    &:hover, &:focus {
       path:not(.outline) {
-        fill: rgb(128, 201, 223);
+        fill: hsl(194, 60%, 75%);
       }
     }
     &.pressed {
       path:not(.outline) {
-        fill: rgb(142, 223, 128) !important;
+        fill: var(--highlight) !important;
       }
     }
 
@@ -29,6 +29,5 @@
   .outline {
     fill: var(--fg);
   }
- 
  
 }

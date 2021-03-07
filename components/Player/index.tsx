@@ -163,16 +163,38 @@ export default function Player({ scale, chord, mode }: Props) {
         <button
           onClick={() => (mode === "scale" ? playScale() : playChord())}
           type="button"
+          tabIndex={6}
+          title="Play"
         >
           <span className="visually-hidden">Play</span>
           <img alt="" src="/images/play.svg" className={styles.icon} />
         </button>
-        <button onClick={() => stopAll()} type="button">
+        <button
+          onClick={() => stopAll()}
+          title="Stop"
+          type="button"
+          tabIndex={7}
+        >
           <span className="visually-hidden">Stop</span>
           <img alt="" src="/images/stop.svg" className={styles.icon} />
         </button>
       </div>
-      <Toggle legend="Enable/disable pedal" onChange={() => setPedal(!pedal)} optionLeft={{ id: 'pedal-on', value: 'on', checked: pedal, label: 'Pedal on' }} optionRight={{ id: 'pedal-off', value: 'off', checked: !pedal, label: 'Pedal off' }} />
+      <Toggle
+        legend="Enable/disable pedal"
+        onChange={() => setPedal(!pedal)}
+        optionLeft={{
+          tabIndex: 8,
+          value: "pedal-on",
+          checked: pedal,
+          label: "Pedal on"
+        }}
+        optionRight={{
+          tabIndex: 9,
+          value: "pedal-off",
+          checked: !pedal,
+          label: "Pedal off"
+        }}
+      />
       <Piano
         octaves={3}
         currentNotes={currentNotes}
