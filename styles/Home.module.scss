@@ -7,16 +7,9 @@
   align-items: center;
 
   .title {
-    font-size: 2.75em;
-    font-family: "Neon Tubes 2", cursive;
-    color: hsl(350, 100%, 96%);
-    text-shadow: 0 0 0 var(--cherry-blossom-86), 0 0 0 var(--cherry-blossom-86),
-      0 0 0 var(--cherry-blossom-86), 1px 0 1px var(--cherry-blossom-86),
-      1px 0 1px var(--cherry-blossom-86), 1px 0 1px var(--cherry-blossom-86),
-      1px 0 20px var(--cherry-blossom-86), 1px 0 20px var(--cherry-blossom-86),
-      1px 0 20px var(--cherry-blossom-86), 1px 0 10px var(--cherry-blossom-70),
-      1px 0 10px var(--cherry-blossom-70), 1px 0 50px var(--cherry-blossom-70),
-      1px 0 50px var(--cherry-blossom-70);
+    font-size: 3em;
+    font-family: "Neon Glow", cursive;
+    color: hsl(350, 100%, 80%);
   }
   .main {
     border-radius: 25px;
@@ -29,6 +22,16 @@
   }
 
   .select {
+    &-wrapper {
+      label {
+        display: inline-block;
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+      }
+      &:first-of-type {
+        margin-right: 1rem;
+      }
+    }
     position: relative;
     height: 2rem;
     select {
@@ -48,5 +51,10 @@
       content: "\25bc";
       height: 100%;
     }
+  }
+
+  .selectors {
+    display: flex; 
+    align-items: center;
   }
 }

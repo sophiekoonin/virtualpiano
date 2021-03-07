@@ -1,4 +1,7 @@
 .piano {
+  .frame {
+    fill: var(--accent);
+  }
   margin: 2rem 0;
   .white {
     fill: #fff;
@@ -8,12 +11,24 @@
     fill: var(--fg-15);
   }
   .key {
-    stroke: var(--fg-15);
     stroke-width: 1px;
     cursor: pointer;
+
+    &:hover {
+      path:not(.outline) {
+        fill: rgb(128, 201, 223);
+      }
+    }
+    &.pressed {
+      path:not(.outline) {
+        fill: rgb(142, 223, 128) !important;
+      }
+    }
+
   }
-  .key:hover,
-  .pressed {
-    fill: rgb(161, 128, 223) !important;
+  .outline {
+    fill: var(--fg);
   }
+ 
+ 
 }

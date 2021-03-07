@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { generateOctaves, Note } from "../../utils/notes"
 import { real, imag } from "../../utils/wavetable"
+import Toggle from "../Toggle"
 import Piano from "./Piano"
 import styles from "./Player.module.scss"
 
@@ -171,15 +172,7 @@ export default function Player({ scale, chord, mode }: Props) {
           <img alt="" src="/images/stop.svg" className={styles.icon} />
         </button>
       </div>
-      <label htmlFor="pedal">
-        <input
-          checked={pedal}
-          onChange={() => setPedal(!pedal)}
-          id="pedal"
-          type="checkbox"
-        />
-        Pedal
-      </label>
+      <Toggle legend="Enable/disable pedal" onChange={() => setPedal(!pedal)} optionLeft={{ id: 'pedal-on', value: 'on', checked: pedal, label: 'Pedal on' }} optionRight={{ id: 'pedal-off', value: 'off', checked: !pedal, label: 'Pedal off' }} />
       <Piano
         octaves={3}
         currentNotes={currentNotes}

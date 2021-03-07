@@ -1,5 +1,9 @@
 .controls {
+  padding-top: 1rem;
   button {
+    &:first-of-type {
+      margin-right: 1rem;
+    }
     display: inline-flex;
     align-items: center;
     justify-content: center;
