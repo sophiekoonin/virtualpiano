@@ -80,7 +80,7 @@ function handleKeyAction(event: KeyboardEvent, callback: () => void) {
 }
 
 function Key({ colour, id, x, pedal, play, stop, currentNotes }: KeyProps) {
-  const playNote = () => (pedal ? null : play(id))
+  const playNote = () => (pedal || currentNotes.includes(id) ? null : play(id))
   const stopNote = () => (pedal ? null : stop(id))
 
   function toggleNote(id: number) {
