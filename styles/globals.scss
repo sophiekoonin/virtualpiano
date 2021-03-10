@@ -48,7 +48,8 @@ a {
   --accent: hsl(266, 82%, 85%);
   --accent-68: hsl(266, 82%, 68%);
   --accent-88: hsl(266, 82%, 88%);
-  --highlight: hsla(350, 100%, 86%, 1);
+  --highlight: rgb(174, 231, 231);
+  --focus-color: rgb(142, 109, 194);
   --cherry-blossom-70: hsla(350, 100%, 70%, 1);
 }
 
@@ -67,6 +68,6 @@ button, input, a, select {
     outline: none;
   }
   &:focus-visible {
-    box-shadow: 0px 0px 2px 3px var(--cherry-blossom-70);
+    box-shadow: 0px 0px 2px 3px var(--focus-color);
   }
 }

@@ -20,7 +20,7 @@ export default function Player({ scale, chord, mode }: Props) {
   const [noteTimeouts, setNoteTimeouts] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
   const [oscillators, setOscillators] = useState<OscillatorMap>({})
-  const [pedal, setPedal] = useState(false)
+  const [pedalOn, setPedalOn] = useState(false)
   const audioContextRef = useRef<AudioContext>()
   const pianoNotes = generateOctaves("C", 4, 3)
 
@@ -53,10 +53,10 @@ export default function Player({ scale, chord, mode }: Props) {
   }, [currentNotes])
 
   useEffect(() => {
-    if (pedal === false) {
+    if (pedalOn === false) {
       disconnectAll()
     }
-  }, [pedal])
+  }, [pedalOn])
 
   useEffect(() => {
     return () => {
@@ -83,7 +83,7 @@ export default function Player({ scale, chord, mode }: Props) {
   async function playNote(id: number) {
     const osc = await initOscillator()
     setOscillators({ ...oscillators, [id]: osc })
-    setCurrentNotes(pedal ? [...currentNotes, id] : [id])
+    setCurrentNotes(pedalOn ? [...currentNotes, id] : [id])
     osc.frequency.value = pianoNotes[id].frequency
   }
 
@@ -92,7 +92,7 @@ export default function Player({ scale, chord, mode }: Props) {
     const ids = chord.map((note) =>
       pianoNotes.findIndex((n) => n.frequency === note.frequency)
     )
-    setPedal(true)
+    setPedalOn(true)
     const oscs = oscillators
     ids.forEach(async (id) => {
       const osc = await initOscillator()
@@ -181,17 +181,17 @@ export default function Player({ scale, chord, mode }: Props) {
       </div>
       <Toggle
         legend="Enable/disable pedal"
-        onChange={() => setPedal(!pedal)}
+        onChange={() => setPedalOn(!pedalOn)}
         optionLeft={{
           tabIndex: 8,
           value: "pedal-on",
-          checked: pedal,
+          checked: pedalOn,
           label: "Pedal on"
         }}
         optionRight={{
           tabIndex: 9,
           value: "pedal-off",
-          checked: !pedal,
+          checked: !pedalOn,
           label: "Pedal off"
         }}
       />
@@ -199,7 +199,7 @@ export default function Player({ scale, chord, mode }: Props) {
         octaves={3}
         currentNotes={currentNotes}
         play={playNote}
-        pedal={pedal}
+        pedalOn={pedalOn}
         stop={stop}
       />
       <p>

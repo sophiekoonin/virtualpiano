@@ -125,8 +125,8 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <p>I'm still trying to get it keyboard-accessible - bear with me!</p>
         <p>
+          <span aria-hidden="true">✨</span>
           made by{" "}
           <a
             href="https://localghost.dev"
@@ -135,6 +135,7 @@ export default function Home() {
           >
             Sophie
           </a>
+          <span aria-hidden="true">✨</span>
         </p>
       </footer>
     </div>
