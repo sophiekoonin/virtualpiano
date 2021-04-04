@@ -16,7 +16,7 @@
 
     &:focus:not([data-focus-visible-added]) {
       path:not(.outline) {
-        fill: #ebebeb; 
+        fill: initial
       }
     }
     &.pressed {

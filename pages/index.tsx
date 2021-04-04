@@ -4,9 +4,9 @@ import cx from "classnames"
 import Player from "../components/Player"
 import Toggle from "../components/Toggle"
 import styles from "../styles/Home.module.scss"
-import { calcChord, Chords } from "../utils/chords"
-import { notes, SharpToFlat } from "../utils/notes"
-import { calcScale, Scales } from "../utils/scales"
+import { calcChord, Chords } from "../lib/chords"
+import { notes, SharpToFlat } from "../lib/notes"
+import { calcScale, Scales } from "../lib/scales"
 
 export default function Home() {
   const [key, setKey] = useState("C")
