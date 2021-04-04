@@ -125,6 +125,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
+        <p>If notes get stuck, refresh the page. It happens sometimes.</p>
         <p>
           <span aria-hidden="true">✨</span>
           made by{" "}
