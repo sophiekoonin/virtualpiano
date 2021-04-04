@@ -27,7 +27,7 @@ export const SharpToFlat = Object.freeze({
   "G#": "Ab"
 })
 
-const SemitoneIntervals = Object.freeze({
+const SemitoneDistances = Object.freeze({
   C: -9,
   "C#": -8,
   D: -7,
@@ -42,7 +42,7 @@ const SemitoneIntervals = Object.freeze({
   B: 2
 })
 
-export const notes = Object.keys(SemitoneIntervals)
+export const notes = Object.keys(SemitoneDistances)
 export type Note = { letter: string; octave: number; frequency: number }
 export type NoteLetter = typeof notes[number]
 
@@ -83,19 +83,19 @@ export function generateOctaves(
   return octaveNotes
 }
 
-export function calcInterval(rootNote: NoteLetter, intervalNote: NoteLetter) {
-  // we find the interval from A, and use it as an offset
-  const rootNoteIntervalFromA = SemitoneIntervals[rootNote]
-  return SemitoneIntervals[intervalNote] - rootNoteIntervalFromA
+export function calcDistance(rootNote: NoteLetter, otherNote: NoteLetter) {
+  // we find the distance from A, and use it as an offset
+  const rootNoteDistanceFromA = SemitoneDistances[rootNote]
+  return SemitoneDistances[otherNote] - rootNoteDistanceFromA
 }
 
 // takes a note and its octave, e.g. A, 4, and return frequency.
 export function calcFrequency(note: NoteLetter, octave: number): number {
-  const intervalFromA = SemitoneIntervals[note]
+  const distanceFromA = SemitoneDistances[note]
   // our base is octave 4, so subtract our note's octave from that, and multiply by number of semitones in an octave
-  // then add the interval
+  // then add the distance
   // maths is hard
-  const steps = (4 - octave) * -12 + intervalFromA
+  const steps = (4 - octave) * -12 + distanceFromA
 
   // f = 440Hz * 2^n/12
   const freq = A4 * Math.pow(2, steps / 12)
