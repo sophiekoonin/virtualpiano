@@ -103,7 +103,7 @@ function Key({
     onKeyPress: (e: KeyboardEvent) => handleKeyAction(e, () => toggleNote(id)),
     onKeyDown: (e: KeyboardEvent) => handleKeyAction(e, playNote),
     onKeyUp: (e: KeyboardEvent) => handleKeyAction(e, stopNote),
-    tabIndex: x + 10,
+    tabIndex: id + 10,
     key: id,
     "data-keyid": id
   }

@@ -3,20 +3,20 @@
     fill: var(--accent);
   }
   margin: 2rem 0;
-  .white {
-    fill: #fff;
-  }
 
-  .black {
-    fill: var(--fg-15);
-  }
   .key {
     stroke-width: 1px;
     cursor: pointer;
-
-    &:hover, &:focus {
+    
+    &:focus, &:hover {
       path:not(.outline) {
         fill: hsl(194, 60%, 75%);
+      }
+    }
+
+    &:focus:not([data-focus-visible-added]) {
+      path:not(.outline) {
+        fill: #ebebeb; 
       }
     }
     &.pressed {
