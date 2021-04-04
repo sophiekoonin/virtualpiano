@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
-import { generateOctaves, Note } from "../../utils/notes"
-import { real, imag } from "../../utils/wavetable"
+import { generateOctaves, Note } from "../../lib/notes"
+import { real, imag } from "../../lib/wavetable"
 import Toggle from "../Toggle"
 import Piano from "./Piano"
 import styles from "./Player.module.scss"

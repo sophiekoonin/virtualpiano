@@ -92,10 +92,9 @@ export function calcDistance(rootNote: NoteLetter, otherNote: NoteLetter) {
 // takes a note and its octave, e.g. A, 4, and return frequency.
 export function calcFrequency(note: NoteLetter, octave: number): number {
   const distanceFromA = SemitoneDistances[note]
-  // our base is octave 4, so subtract our note's octave from that, and multiply by number of semitones in an octave
+  // our base is octave 4, so subtract that from our note's octave, and multiply by number of semitones in an octave
   // then add the distance
-  // maths is hard
-  const steps = (4 - octave) * -12 + distanceFromA
+  const steps = (octave - 4) * 12 + distanceFromA
 
   // f = 440Hz * 2^n/12
   const freq = A4 * Math.pow(2, steps / 12)
