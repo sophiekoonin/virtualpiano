@@ -64,7 +64,7 @@ function Key({
         d={`M${
           x + Widths.w
         },141.531l0,-116.531l-24,0l0,116.531c0,1.915,1.554,3.469,3.469,3.469l17.062,0c1.915,0,3.469,-1.554,3.469,-3.469z`}
-        fill="#ebebeb"
+        className={styles.white}
       />
       <path
         d={`M${
@@ -77,6 +77,7 @@ function Key({
     // @ts-expect-errorw
     <g {...props}>
       <path
+        className={styles.black}
         d={`M${
           x + Widths.b
         },94.919v-69.919h-16.8v69.919c0,1.149,1.088,2.081,2.428,2.081h11.944c1.34,0,2.428,-0.932,2.428,-2.081z`}

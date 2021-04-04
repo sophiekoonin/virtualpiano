@@ -2,11 +2,15 @@
   .frame {
     fill: var(--accent);
   }
+
   margin: 2rem 0;
 
   .key {
     stroke-width: 1px;
     cursor: pointer;
+    .white {
+      fill: #ebebeb;
+      }    
     
     &:focus, &:hover {
       path:not(.outline) {
@@ -16,16 +20,22 @@
 
     &:focus:not([data-focus-visible-added]) {
       path:not(.outline) {
-        fill: initial
+        &.white {
+          fill:#ebebeb;
+        }
+
+        &.black {
+          fill: black;
+        }
       }
     }
     &.pressed {
-      path:not(.outline) {
+      path:not(.outline) {   
         fill: var(--highlight) !important;
       }
     }
-
   }
+
   .outline {
     fill: var(--fg);
   }
