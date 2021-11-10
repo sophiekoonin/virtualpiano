@@ -12,7 +12,7 @@
     "classnames": "2.2.6",
     "focus-visible": "5.2.0",
     "next": "10.0.5",
-    "node-sass": "5.0.0",
+    "sass": "1.43.4",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },

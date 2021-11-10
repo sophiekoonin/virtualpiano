@@ -33,12 +33,12 @@ export default function Player({ scale, chord, mode }: Props) {
       } else {
         audioCtx = audioContextRef.current
       }
-      const wave = audioCtx.createPeriodicWave(
-        new Float32Array(real),
-        new Float32Array(imag)
-      )
+      // const wave = audioCtx.createPeriodicWave(
+      //   new Float32Array(real),
+      //   new Float32Array(imag)
+      // )
       const osc = audioCtx.createOscillator()
-      osc.setPeriodicWave(wave)
+      osc.type = "sine"
       osc.connect(audioCtx.destination)
       osc.start()
       setIsPlaying(true)
