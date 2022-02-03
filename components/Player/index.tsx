@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { generateOctaves, Note } from "../../lib/notes"
-import { real, imag } from "../../lib/wavetable"
+// import { real, imag } from "../../lib/wavetable"
 import Toggle from "../Toggle"
 import Piano from "./Piano"
 import styles from "./Player.module.scss"
@@ -11,20 +11,25 @@ type Props = {
   mode: "scale" | "chord"
 }
 
-type OscillatorMap = {
-  [keyId: string]: OscillatorNode
+type Channel = {
+  osc: OscillatorNode
+  gain: GainNode
+}
+
+type ChannelMap = {
+  [id: number]: Channel
 }
 
 export default function Player({ scale, chord, mode }: Props) {
   const [currentNotes, setCurrentNotes] = useState([])
   const [noteTimeouts, setNoteTimeouts] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
-  const [oscillators, setOscillators] = useState<OscillatorMap>({})
+  const [channels, setChannels] = useState<ChannelMap>({})
   const [pedalOn, setPedalOn] = useState(false)
   const audioContextRef = useRef<AudioContext>()
   const pianoNotes = generateOctaves("C", 4, 3)
 
-  async function initOscillator(): Promise<OscillatorNode> {
+  async function initChannel(): Promise<Channel> {
     return new Promise((resolve) => {
       let audioCtx: AudioContext
       if (audioContextRef.current == null) {
@@ -37,12 +42,19 @@ export default function Player({ scale, chord, mode }: Props) {
       //   new Float32Array(real),
       //   new Float32Array(imag)
       // )
+      const gain = audioCtx.createGain()
+      gain.connect(audioCtx.destination)
+      gain.gain.setValueAtTime(0, audioCtx.currentTime)
+
       const osc = audioCtx.createOscillator()
       osc.type = "sine"
-      osc.connect(audioCtx.destination)
+      osc.connect(gain)
       osc.start()
+
       setIsPlaying(true)
-      resolve(osc)
+      gain.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.06)
+
+      resolve({ osc, gain })
     })
   }
 
@@ -69,22 +81,21 @@ export default function Player({ scale, chord, mode }: Props) {
 
   function disconnectAll() {
     try {
-      Object.keys(oscillators).forEach((o) => {
-        oscillators[o].stop()
-        oscillators[o].disconnect(audioContextRef.current.destination)
+      Object.keys(channels).forEach((o) => {
+        channels[o].gain.disconnect(audioContextRef.current.destination)
       })
     } catch (err) {
       // best-effort
     } finally {
-      setOscillators({})
+      setChannels({})
     }
   }
 
   async function playNote(id: number) {
-    const osc = await initOscillator()
-    setOscillators({ ...oscillators, [id]: osc })
+    const channel = await initChannel()
+    setChannels({ ...channels, [id]: channel })
     setCurrentNotes(pedalOn ? [...currentNotes, id] : [id])
-    osc.frequency.value = pianoNotes[id].frequency
+    channel.osc.frequency.value = pianoNotes[id].frequency
   }
 
   async function playChord() {
@@ -93,19 +104,19 @@ export default function Player({ scale, chord, mode }: Props) {
       pianoNotes.findIndex((n) => n.frequency === note.frequency)
     )
     setPedalOn(true)
-    const oscs = oscillators
+    const oscs = channels
     ids.forEach(async (id) => {
-      const osc = await initOscillator()
-      oscs[id] = osc
-      osc.frequency.value = pianoNotes[id].frequency
+      const channel = await initChannel()
+      oscs[id] = channel
+      channel.osc.frequency.value = pianoNotes[id].frequency
     })
     setCurrentNotes(ids)
-    setOscillators(oscs)
+    setChannels(oscs)
   }
 
   async function playScale() {
-    const osc = await initOscillator()
-    setOscillators({ ...oscillators, [-1]: osc })
+    const channel = await initChannel()
+    setChannels({ ...channels, [-1]: channel })
     // audioContextRef.current.resume()
 
     const playLength = scale.length / 2
@@ -114,7 +125,7 @@ export default function Player({ scale, chord, mode }: Props) {
       const time = i * 0.5 * 1000
       noteTimeouts.push(
         setTimeout(() => {
-          osc.frequency.value = note.frequency
+          channel.osc.frequency.value = note.frequency
           setCurrentNotes([
             pianoNotes.findIndex((n) => n.frequency === note.frequency)
           ])
@@ -129,12 +140,15 @@ export default function Player({ scale, chord, mode }: Props) {
         setCurrentNotes([])
       }, scale.length * 0.5 * 1000)
     )
-    osc.stop(audioContextRef.current.currentTime + playLength)
+
+    const stopTime = audioContextRef.current.currentTime + playLength + 0.64
+    channel.osc.stop(stopTime)
+    channel.gain.gain.linearRampToValueAtTime(0, stopTime)
   }
 
   function stopAll() {
     if (!isPlaying) return
-    disconnectAll()
+    Object.keys(channels).forEach((c) => stop(parseInt(c)))
     // audioContextRef.current.suspend()
     noteTimeouts.forEach((t) => clearTimeout(t))
     setCurrentNotes([])
@@ -143,8 +157,8 @@ export default function Player({ scale, chord, mode }: Props) {
 
   function stop(id: number) {
     if (!isPlaying) return
-    const osc = oscillators[id]
-    if (osc == null) return
+    const channel = channels[id]
+    if (channel == null) return
     // remove note from current notes
     const idx = currentNotes.indexOf(id)
 
@@ -153,8 +167,22 @@ export default function Player({ scale, chord, mode }: Props) {
       ns.splice(idx, 1)
       setCurrentNotes(ns)
     }
-    osc.stop(0)
-    osc.disconnect(audioContextRef.current.destination)
+
+    setTimeout(() => {
+      try {
+        channel.gain.disconnect(audioContextRef.current.destination)
+      } catch (err) {
+        // best-effort
+      } finally {
+        delete channels[id]
+      }
+    }, 0.48 * 1000)
+
+    channel.osc.stop(audioContextRef.current.currentTime + 0.48)
+    channel.gain.gain.linearRampToValueAtTime(
+      0,
+      audioContextRef.current.currentTime + 0.48
+    )
   }
 
   return (
