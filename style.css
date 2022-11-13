@@ -1,0 +1,34 @@
+.black-note {
+  cursor: pointer;
+  background-color: #222;
+  border: 1px solid #222;
+  position: absolute;
+  border-radius: 0 0 3px 3px;
+  z-index: 2;
+  box-sizing: content-box;
+  padding: 0;
+}
+
+.white-note {
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #222;
+  position: relative;
+  border-radius: 0 0 5px 5px;
+  border-right-width: 0px;
+  box-sizing: content-box;
+  padding: 0;
+}
+
+.note-pressed {
+  background-color: #aee7e7;
+}
+
+.white-note:last-of-type {
+  border-right-width: 1px;
+}
+
+.keyboard {
+  position: relative;
+  box-sizing: content-box;
+}

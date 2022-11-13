@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/lib/main.mjs" type="module"></script>
+  <link rel="stylesheet" href="style.css">
   <title>Virtual Piano</title>
 </head>
 
@@ -15,6 +16,7 @@
   </header>
   <main>
     <div id="scale-options">
+      <label for="note-select-scale">Scale root</label>
       <select id="note-select-scale">
         <option value="C">C</option>
         <option value="C#">C♯/D♭</option>
@@ -30,6 +32,7 @@
         <option value="B">B</option>
       </select>
 
+      <label for="scale-select">Scale type</label>
       <select id="scale-select">
         <option value="major">Major</option>
         <option value="nat-min">Natural minor</option>
@@ -45,6 +48,7 @@
       </select>
     </div>
     <div id="chord-options">
+      <label for="note-select-chord">Chord root</label>
       <select id="note-select-chord">
         <option value="C">C</option>
         <option value="C#">C♯/D♭</option>
@@ -59,6 +63,8 @@
         <option value="A#">A♯/B♭</option>
         <option value="B">B</option>
       </select>
+      <label for="chord-type-select">Chord type</label>
+
       <select id="chord-type-select">
         <option value="major">Major</option>
         <option value="maj6">Major 6th</option>
