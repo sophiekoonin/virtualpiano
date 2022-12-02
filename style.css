@@ -87,13 +87,13 @@ select:focus-visible {
   align-items: center;
 }
 
-.title {
+h1 {
   font-size: 3em;
   font-family: "Neon Glow", cursive;
   color: hsl(350, 100%, 80%);
 }
 
-.main {
+main {
   max-width: 60%;
   border-radius: 25px;
   padding: 2rem 5rem;
@@ -131,7 +131,7 @@ select:focus-visible {
   align-items: center;
 }
 
-.footer {
+footer {
   color: hsl(180, 1%, 34%);
   text-align: center;
   padding: 2rem 0;

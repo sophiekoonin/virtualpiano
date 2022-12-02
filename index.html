@@ -5,89 +5,105 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <script src="/lib/main.mjs" type="module"></script>
   <link rel="stylesheet" href="style.css">
   <title>Virtual Piano</title>
 </head>
 
 <body>
-  <header>
-    <h1>Virtual Piano</h1>
-  </header>
-  <main>
-    <div id="scale-options">
-      <label for="note-select-scale">Scale root</label>
-      <select id="note-select-scale">
-        <option value="C">C</option>
-        <option value="C#">C♯/D♭</option>
-        <option value="D">D</option>
-        <option value="D#">D♯/E♭</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="F#">F♯/G♭</option>
-        <option value="G">G</option>
-        <option value="G#">G♯/A♭</option>
-        <option value="A">A</option>
-        <option value="A#">A♯/B♭</option>
-        <option value="B">B</option>
-      </select>
+  <div class="container">
+    <header>
+      <h1>Virtual Piano</h1>
+    </header>
+    <main>
+      <div id="select-wrapper">
+        <label for="note-select-scale">Scale root</label>
+        <select id="note-select-scale">
+          <option value="C">C</option>
+          <option value="C#">C♯/D♭</option>
+          <option value="D">D</option>
+          <option value="D#">D♯/E♭</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F#">F♯/G♭</option>
+          <option value="G">G</option>
+          <option value="G#">G♯/A♭</option>
+          <option value="A">A</option>
+          <option value="A#">A♯/B♭</option>
+          <option value="B">B</option>
+        </select>
 
-      <label for="scale-select">Scale type</label>
-      <select id="scale-select">
-        <option value="major">Major</option>
-        <option value="nat-min">Natural minor</option>
-        <option value="har-min">Harmonic minor</option>
-        <option value="mel-min-up">Melodic minor (up)</option>
-        <option value="mel-min-down">Melodic minor (down)</option>
-        <option value="dorian">Dorian mode</option>
-        <option value="phryigan">Phrygian mode</option>
-        <option value="lydian">Lydian mode</option>
-        <option value="mixolydian">Mixolydian mode</option>
-        <option value="locrian">Locrian mode</option>
-        <option value="pent-blues">Minor pentatonic blues</option>
-      </select>
-    </div>
-    <div id="chord-options">
-      <label for="note-select-chord">Chord root</label>
-      <select id="note-select-chord">
-        <option value="C">C</option>
-        <option value="C#">C♯/D♭</option>
-        <option value="D">D</option>
-        <option value="D#">D♯/E♭</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="F#">F♯/G♭</option>
-        <option value="G">G</option>
-        <option value="G#">G♯/A♭</option>
-        <option value="A">A</option>
-        <option value="A#">A♯/B♭</option>
-        <option value="B">B</option>
-      </select>
-      <label for="chord-type-select">Chord type</label>
+        <label for="scale-select">Scale type</label>
+        <select id="scale-select">
+          <option value="major">Major</option>
+          <option value="nat-min">Natural minor</option>
+          <option value="har-min">Harmonic minor</option>
+          <option value="mel-min-up">Melodic minor (up)</option>
+          <option value="mel-min-down">Melodic minor (down)</option>
+          <option value="dorian">Dorian mode</option>
+          <option value="phryigan">Phrygian mode</option>
+          <option value="lydian">Lydian mode</option>
+          <option value="mixolydian">Mixolydian mode</option>
+          <option value="locrian">Locrian mode</option>
+          <option value="pent-blues">Minor pentatonic blues</option>
+        </select>
+      </div>
+      <div id="chord-options">
+        <label for="note-select-chord">Chord root</label>
+        <select id="note-select-chord">
+          <option value="C">C</option>
+          <option value="C#">C♯/D♭</option>
+          <option value="D">D</option>
+          <option value="D#">D♯/E♭</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F#">F♯/G♭</option>
+          <option value="G">G</option>
+          <option value="G#">G♯/A♭</option>
+          <option value="A">A</option>
+          <option value="A#">A♯/B♭</option>
+          <option value="B">B</option>
+        </select>
+        <label for="chord-type-select">Chord type</label>
 
-      <select id="chord-type-select">
-        <option value="major">Major</option>
-        <option value="maj6">Major 6th</option>
-        <option value="maj7">Major 7th</option>
-        <option value="dom7">Dominant 7th</option>
-        <option value="aug">Augmented</option>
-        <option value="aug7">Augmented 7th</option>
-        <option value="minor">Minor</option>
-        <option value="min6">Minor 6th</option>
-        <option value="min7">Minor 7th</option>
-        <option value="dim">Diminished</option>
-        <option value="dim7">Diminished 7th</option>
-        <option value="sus4">Suspended 4th (sus4)</option>
-        <option value="sus2">Suspended 2nd (sus2)</option>
-        <option value="add9">Add9</option>
-        <option value="minmaj">Minor-major 7th</option>
-        <option value="half">Half-diminished 7th</option>
-      </select>
-    </div>
-    <div id="player"></div>
-    <button id="play-scale" type="button">Play scale</button>
-    <button id="play-chord" type="button">Play chord</button>
-  </main>
+        <select id="chord-type-select">
+          <option value="major">Major</option>
+          <option value="maj6">Major 6th</option>
+          <option value="maj7">Major 7th</option>
+          <option value="dom7">Dominant 7th</option>
+          <option value="aug">Augmented</option>
+          <option value="aug7">Augmented 7th</option>
+          <option value="minor">Minor</option>
+          <option value="min6">Minor 6th</option>
+          <option value="min7">Minor 7th</option>
+          <option value="dim">Diminished</option>
+          <option value="dim7">Diminished 7th</option>
+          <option value="sus4">Suspended 4th (sus4)</option>
+          <option value="sus2">Suspended 2nd (sus2)</option>
+          <option value="add9">Add9</option>
+          <option value="minmaj">Minor-major 7th</option>
+          <option value="half">Half-diminished 7th</option>
+        </select>
+      </div>
+      <div id="player" class="keyboard"></div>
+      <button id="play-scale" type="button">Play scale</button>
+      <button id="play-chord" type="button">Play chord</button>
+    </main>
+  </div>
 </body>
+<footer>
+  <p>
+    <span aria-hidden="true">✨</span>
+    made by
+    <a href="https://localghost.dev" target="_blank" rel="noopener noreferrer">
+      Sophie
+    </a>
+    <span aria-hidden="true">✨</span>
+  </p>
+</footer>
 
 </html>
