@@ -6,14 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-          cache: "yarn"
-      - run: yarn install
-      - run: yarn build
       - uses: bcomnes/deploy-to-neocities@v1.1.11
         with:
           api_token: ${{ secrets.NEOCITIES_TOKEN }}
-          dist_dir: "_site/"
+          dist_dir: "."
           cleanup: false
