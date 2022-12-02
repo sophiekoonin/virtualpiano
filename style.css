@@ -194,3 +194,16 @@ footer {
 .controls button:hover {
   background: var(--highlight);
 }
+
+.hidden {
+  display: none !important;
+}
+
+.mode {
+  border: 0;
+  text-align: center;
+}
+
+.flow>*+* {
+  margin-block-start: 1.5rem;
+}
