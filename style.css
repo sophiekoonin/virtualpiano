@@ -21,7 +21,6 @@
   src: url("/fonts/Inter-italic.var.woff2?v=3.13") format("woff2");
 }
 
-
 html,
 body {
   background-color: #d0eef0;
@@ -111,12 +110,9 @@ main {
   border: 2px solid var(--accent);
   padding: 0.5rem;
   padding-right: 1.5rem;
-  background-image: url('/arrow.svg');
+  background-image: url("/arrow.svg");
   background-position: right;
-  background-size:
-    auto,
-    34px 100%,
-    1px 100%;
+  background-size: auto, 34px 100%, 1px 100%;
   background-repeat: no-repeat;
 }
 
@@ -137,7 +133,6 @@ footer {
   padding: 2rem 0;
 }
 
-
 /* PIANO */
 
 .black-note {
@@ -149,9 +144,13 @@ footer {
   z-index: 2;
   box-sizing: content-box;
   padding: 0;
+  width: 20px;
+  height: 100px;
 }
 
 .white-note {
+  width: 41px;
+  height: 150px;
   cursor: pointer;
   background-color: #fff;
   border: 1px solid #222;
@@ -173,9 +172,18 @@ footer {
 .keyboard {
   position: relative;
   box-sizing: content-box;
+  height: 150px;
 }
 
-.controls>*+* {
+.frame {
+  background-color: var(--accent);
+  border-radius: 6px;
+  padding-inline: 1rem;
+  padding-block-start: 0.25rem;
+  padding-block-end: 1rem;
+}
+
+.controls > * + * {
   margin-inline-start: 1rem;
 }
 
@@ -204,6 +212,6 @@ footer {
   text-align: center;
 }
 
-.flow>*+* {
+.flow > * + * {
   margin-block-start: 1.5rem;
 }

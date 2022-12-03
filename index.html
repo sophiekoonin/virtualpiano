@@ -58,7 +58,7 @@
           <option value="pent-blues">Minor pentatonic blues</option>
         </select>
       </div>
-      <div id="chord-options">
+      <div id="chord-options" class="hidden">
         <label for="note-select-chord">Chord root</label>
         <select id="note-select-chord">
           <option value="C">C</option>
@@ -99,16 +99,38 @@
         <button id="play-scale" type="button"><span class="visually-hidden">Play scale</span> <img alt=""
             src="/images/play.svg" className="icon" />
         </button>
-        <button id="play-chord" type="button"><span class="visually-hidden">Play chord</span>
+        <button id="play-chord" type="button" class="hidden"><span class="visually-hidden">Play chord</span>
           <img alt="" src="/images/play.svg" className="icon" />
         </button>
         <button id="stop" type="button"><span class="visually-hidden">Stop</span>
           <img alt="" src="/images/stop.svg" className="icon" />
         </button>
       </div>
-      <div id="player" class="keyboard">
-      </div>
+      <div class="frame">
+        <svg height="25" width="100%">
+          <rect x="60" width="85%" y="10" rx="5" height="3px" fill="hsl(266, 82%, 70%)" />
+          <g id="buttons">
+            <circle r="5" cx="15" cy="12.5" fill="#fffea6" />
+            <circle r="5" cx="30" cy="12.5" fill="#fbdaff" />
+            <circle r="5" cx="45" cy="12.5" fill="#dafffa" />
+          </g>
+        </svg>
+        <div id="player" class="keyboard">
+          <button type="button" id="0" title="C3" data-note-type="white" class="white-note"></button><button type="button" id="1" title="C#3" data-note-type="black" class="black-note"
+            style="left: 32px;"></button><button type="button" id="2" title="D3" data-note-type="white" class="white-note"></button><button type="button" id="3" title="D#3" data-note-type="black" class="black-note"
+            style="left: 74px;"></button><button type="button" id="4" title="E3" data-note-type="white" class="white-note"></button><button type="button" id="5" title="F3" data-note-type="white" class="white-note"></button><button type="button" id="6" title="F#3" data-note-type="black" class="black-note"
+            style="left: 157px;"></button><button type="button" id="7" title="G3" data-note-type="white" class="white-note"></button><button type="button" id="8" title="G#3" data-note-type="black" class="black-note"
+            style="left: 199px;"></button><button type="button" id="9" title="A3" data-note-type="white" class="white-note"></button><button type="button" id="10" title="A#3" data-note-type="black" class="black-note"
+            style="left: 240px;"></button><button type="button" id="11" title="B3" data-note-type="white" class="white-note"></button><button type="button" id="12" title="C4" data-note-type="white" class="white-note"></button><button type="button" id="13" title="C#4" data-note-type="black" class="black-note"
+            style="left: 325px;"></button><button type="button" id="14" title="D4" data-note-type="white" class="white-note"></button><button type="button" id="15" title="D#4" data-note-type="black" class="black-note"
+            style="left: 369px;"></button><button type="button" id="16" title="E4" data-note-type="white" class="white-note"></button><button type="button" id="17" title="F4" data-note-type="white" class="white-note"></button><button type="button" id="18" title="F#4" data-note-type="black" class="black-note"
+            style="left: 451px;"></button><button type="button" id="19" title="G4" data-note-type="white" class="white-note"></button><button type="button" id="20" title="G#4" data-note-type="black" class="black-note"
+            style="left: 494px;"></button><button type="button" id="21" title="A4" data-note-type="white" class="white-note"></button><button type="button" id="22" title="A#4" data-note-type="black" class="black-note"
+            style="left: 536px;"></button><button type="button" id="23" title="B4" data-note-type="white" class="white-note"></button>
 
+
+        </div>
+      </div>
     </main>
   </div>
 </body>
