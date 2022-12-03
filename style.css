@@ -79,17 +79,19 @@ select:focus-visible {
 /* LAYOUT */
 .container {
   min-height: 100vh;
+  max-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 h1 {
   font-size: 3em;
   font-family: "Neon Glow", cursive;
   color: hsl(350, 100%, 80%);
+  margin: 0;
 }
 
 main {
@@ -130,7 +132,6 @@ main {
 footer {
   color: hsl(180, 1%, 34%);
   text-align: center;
-  padding: 2rem 0;
 }
 
 /* PIANO */
@@ -214,4 +215,7 @@ footer {
 
 .flow > * + * {
   margin-block-start: 1.5rem;
+}
+#notes-playing {
+  height: 1rem;
 }
