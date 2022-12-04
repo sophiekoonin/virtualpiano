@@ -138,24 +138,24 @@ footer {
 
 .black-note {
   cursor: pointer;
+  grid-row: 1 / span 1;
+  grid-column-end: span 2;
+  justify-self: center;
   background-color: #222;
   border: 1px solid #222;
-  position: absolute;
   border-radius: 0 0 3px 3px;
   z-index: 2;
-  box-sizing: content-box;
   padding: 0;
-  width: 20px;
-  height: 100px;
+  width: 30%;
+  height: 65%;
 }
 
 .white-note {
-  width: 41px;
-  height: 150px;
   cursor: pointer;
+  grid-column-end: span 1;
+  grid-row: 1 / span 1;
   background-color: #fff;
   border: 1px solid #222;
-  position: relative;
   border-radius: 0 0 5px 5px;
   border-right-width: 0px;
   box-sizing: content-box;
@@ -171,9 +171,11 @@ footer {
 }
 
 .keyboard {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: 1fr;
   box-sizing: content-box;
-  height: 150px;
+  height: 8rem;
 }
 
 .frame {
@@ -182,6 +184,7 @@ footer {
   padding-inline: 1rem;
   padding-block-start: 0.25rem;
   padding-block-end: 1rem;
+  width: 100%;
 }
 
 .controls > * + * {
