@@ -188,7 +188,7 @@ footer {
   padding-block-end: clamp(0.5rem, 15%, 1rem);
   width: 100%;
   min-width: 40vw;
-  min-height: 30vh;
+  aspect-ratio: 16/5;
 }
 
 .controls > * + * {
