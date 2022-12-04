@@ -147,7 +147,7 @@ footer {
   z-index: 2;
   padding: 0;
   width: 30%;
-  height: 65%;
+  height: 60%;
 }
 
 .white-note {
@@ -160,6 +160,7 @@ footer {
   border-right-width: 0px;
   box-sizing: content-box;
   padding: 0;
+  height: 100%;
 }
 
 .note-pressed {
@@ -174,18 +175,20 @@ footer {
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   grid-template-rows: 1fr;
-  box-sizing: content-box;
-  height: 8rem;
+  flex: 1;
 }
 
 .frame {
   background-color: var(--accent);
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
   padding-inline: clamp(0.5rem, 5%, 1rem);
   padding-block-start: 0.25rem;
   padding-block-end: clamp(0.5rem, 15%, 1rem);
   width: 100%;
   min-width: 40vw;
+  min-height: 30vh;
 }
 
 .controls > * + * {
