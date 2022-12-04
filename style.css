@@ -95,7 +95,7 @@ h1 {
 }
 
 main {
-  max-width: 60%;
+  max-width: 80%;
   border-radius: 25px;
   padding: 2rem 5rem;
   background: hsl(43, 100%, 99%);
@@ -181,10 +181,11 @@ footer {
 .frame {
   background-color: var(--accent);
   border-radius: 6px;
-  padding-inline: 1rem;
+  padding-inline: clamp(0.5rem, 5%, 1rem);
   padding-block-start: 0.25rem;
-  padding-block-end: 1rem;
+  padding-block-end: clamp(0.5rem, 15%, 1rem);
   width: 100%;
+  min-width: 40vw;
 }
 
 .controls > * + * {
